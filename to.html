@@ -1,0 +1,61 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to do list</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+   <div class="container">
+    <div class="box">
+        <h2>To do list</h2>
+        <input type="text" placeholder="Writer here" id="inputBx">
+        <ul id="list"> </ul>
+    </div>
+   </div> 
+   <script>
+    let inputBx=document.querySelector('#inputBx');
+    let list=document.querySelector('#list');
+    
+    inputBx.addEventListener("keyup", function(event){
+        if (event.key=="Enter") {
+            addItem(this.value)
+            this.value=""
+
+        }
+    })
+    
+    let addItem = (taskText) => {
+        let listItem = document.createElement("li");
+        listItem.innerHTML = `
+            <div class="task-info">
+                <span class="task-text">${taskText}</span>
+                <button class="remove-btn">X</button>
+                <input type="date" class="deadline-input" placeholder="Deadline">
+                <select class="priority-select">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+        `;
+        listItem.querySelector('.remove-btn').addEventListener("click", function() {
+                listItem.remove();
+            });
+
+            listItem.querySelector('.priority-select').addEventListener("click", function(event) {
+                event.stopPropagation(); // Stop the click event from reaching the parent listItem
+            });
+            listItem.querySelector('.deadline-input').addEventListener("click", function(event) {
+                event.stopPropagation();
+            });
+
+            list.appendChild(listItem);
+            inputBx.focus(); // Set focus on the input field after adding an item
+        }
+    </script>
+</body>
+</html>
+
+    
